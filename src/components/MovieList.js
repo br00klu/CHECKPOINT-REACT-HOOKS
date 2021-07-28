@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
+import AddMovieForm from './AddMovieForm';
+import Filter from './Filter';
 import MovieCard from './MovieCard';
+
 
 function MovieList (){
 
@@ -15,6 +18,7 @@ function MovieList (){
             rating:4}
 */
             ])
+   // const [filMovies,setFilMovies]=useState(movies)   
    /* const [newMovie,setNewMovie]=useState({
             title:'',
             description:'',
@@ -25,17 +29,26 @@ function MovieList (){
 */
     
 
+
 return (
     <div>
-        <MovieCard onSubmit={
+        <AddMovieForm addMovie={
             (title,description,posterURL,rating)=> setMovies([
                 {title,description,posterURL,rating},
                 ...movies
         ])}
         />
-        {
-        movies.map(x=><li key={title}>{x}</li>)
-        }
+
+       <Filter filterMovie={
+            
+            (textFilter)=>{
+             movies.filter(x=>x.title.includes(textFilter))
+            }// true
+            } />
+            {
+                movies.map((x,i)=><div key={i}> <MovieCard Movie={x} /> </div>)
+            }
+       
      </div>
 )
 }
