@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AddMovieForm from './AddMovieForm';
 import Filter from './Filter';
 import MovieCard from './MovieCard';
@@ -11,43 +11,41 @@ function MovieList (){
             description: 'blue people being weird',
             posterURL:'https://m.media-amazon.com/images/I/61NGAgspSHL._AC_SX425_.jpg',
             rating:4},
-
             {title:'moch Avatar',
             description: 'blue people being weird',
             posterURL:'https://m.media-amazon.com/images/I/61NGAgspSHL._AC_SX425_.jpg',
             rating:4}
 */
             ])
-   // const [filMovies,setFilMovies]=useState(movies)   
+    const [filMovies,setFilMovies]=useState(movies)   
    /* const [newMovie,setNewMovie]=useState({
             title:'',
             description:'',
             posterURL:'',
             rating:0
         })
-
 */
     
+const addMovie=(title,description,posterURL,rating)=>{ setMovies([
+    {title,description,posterURL,rating},
+    ...movies
+]);
 
-
+}
+const filterMovie=(textFilter)=>{ setFilMovies(
+    movies.filter(x=>x.title.includes(textFilter)))
+   }
+useEffect(()=>{
+    setFilMovies(movies)
+}
+,[movies])
 return (
     <div>
-        <AddMovieForm addMovie={
-            (title,description,posterURL,rating)=> setMovies([
-                {title,description,posterURL,rating},
-                ...movies
-        ])}
-        />
+        <AddMovieForm addMovie={addMovie} />
 
-       <Filter filterMovie={
-            
-            (textFilter)=>{
-             movies.filter(x=>x.title.includes(textFilter))
-            }// true
-            } />
-            {
-                movies.map((x,i)=><div key={i}> <MovieCard Movie={x} /> </div>)
-            }
+       <Filter filterMovie={filterMovie} />
+
+        {filMovies.map((x,i)=><div key={i}> <MovieCard Movie={x} /> </div>)}
        
      </div>
 )

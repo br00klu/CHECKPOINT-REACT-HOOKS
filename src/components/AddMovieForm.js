@@ -17,18 +17,36 @@ function AddMovieForm ({addMovie}) {
     const resetValues=()=> {setTitle(""); setDescription("");setPosterURL("");setRating(0)}
 
     return (
-        <form 
+            <Modal.Dialog>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add a movie:</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <span>Title: </span>
+                    <input value={title} onChange={handleTitle}/>
+                    <span>Description: </span>
+                    <input value={description} onChange={handleDescription}/>
+                    <span>Poster URL: </span>
+                    <input value={posterURL} onChange={handlePosterURL}/>
+                    <span>Rating: </span>
+                    <input value={rating} onChange={handleRating}/>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="secondary">Close</Button>
+                    <Button variant="primary">Save changes</Button>
+                </Modal.Footer>
+            </Modal.Dialog>
+
+       {/* <form 
         style={{display:'flex', flexDirection:'column',alignItems:'flex-start'}}
         onSubmit={e=>{
             e.preventDefault()
             addMovie(title,description,posterURL,rating)
             resetValues()
-            }
-           /* onSubmit(description);
-            onSubmit(posterURL);
-            onSubmit(rating)*/
-        }>
-
+            }}>
+           
             <span>Title: </span>
             <input value={title} onChange={handleTitle}/>
             <span>Description: </span>
@@ -39,7 +57,8 @@ function AddMovieForm ({addMovie}) {
             <input value={rating} onChange={handleRating}/>
 
             <input type="submit" value="add movie"/>
-        </form>
+    </form>
+        */}
     )
 }
 

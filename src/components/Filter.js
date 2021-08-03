@@ -14,13 +14,11 @@ function Filter({filterMovie}){
 
     }
     
-
 return (
-    <div style={{backgroundColor:'lightgrey',marginTop:'10px',marginBottom:'18px'}} onClick={
-        filterMovie(textFilter)
-    }>
+    <div style={{backgroundColor:'lightgrey',marginTop:'10px',marginBottom:'18px'}} >
         <span>Filter: </span>
-        <input type='text'  value={textFilter} onChange={handleTextFilter}/>
+        <input type='text'  value={textFilter} onChange={(e)=>{handleTextFilter(e);filterMovie(e.target.value)}}/>
+        {/*<button onClick={()=>filterMovie(textFilter)}>Search</button>*/}
         
         <label>
             <input type="checkbox" value={0} onClick={handleRatingFilter}/>0 ⭐
