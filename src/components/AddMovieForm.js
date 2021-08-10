@@ -1,4 +1,5 @@
 import React,{useState} from 'react';
+import {Modal,Button} from 'react-bootstrap';
 
 function AddMovieForm ({addMovie}) {
 
@@ -8,7 +9,12 @@ function AddMovieForm ({addMovie}) {
     const [posterURL,setPosterURL]=useState("")
     const [rating, setRating]=useState(0)
 
-    
+    //state for modal
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    //event handlers
     function handleTitle (e) {setTitle(e.target.value)}
     function handleDescription (e) {setDescription(e.target.value)}
     function handlePosterURL (e) {setPosterURL(e.target.value)}
@@ -17,48 +23,39 @@ function AddMovieForm ({addMovie}) {
     const resetValues=()=> {setTitle(""); setDescription("");setPosterURL("");setRating(0)}
 
     return (
-            <Modal.Dialog>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add a movie:</Modal.Title>
+        <>
+            <Button variant="primary" onClick={handleShow}>
+            Add a Movie
+            </Button>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header>
+                    <Modal.Title>Add a Movie:</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
                     <span>Title: </span>
-                    <input value={title} onChange={handleTitle}/>
+                    <input value={title} onChange={handleTitle}/><br/>
                     <span>Description: </span>
-                    <input value={description} onChange={handleDescription}/>
+                    <input value={description} onChange={handleDescription}/><br/>
                     <span>Poster URL: </span>
-                    <input value={posterURL} onChange={handlePosterURL}/>
+                    <input value={posterURL} onChange={handlePosterURL}/><br/>
                     <span>Rating: </span>
                     <input value={rating} onChange={handleRating}/>
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="secondary">Close</Button>
-                    <Button variant="primary">Save changes</Button>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                    <Button variant="primary" onClick={ ()=>{
+                        addMovie(title,description,posterURL,rating);
+                        resetValues()
+                     }} >
+                    Save
+                    </Button>
                 </Modal.Footer>
-            </Modal.Dialog>
 
-       {/* <form 
-        style={{display:'flex', flexDirection:'column',alignItems:'flex-start'}}
-        onSubmit={e=>{
-            e.preventDefault()
-            addMovie(title,description,posterURL,rating)
-            resetValues()
-            }}>
-           
-            <span>Title: </span>
-            <input value={title} onChange={handleTitle}/>
-            <span>Description: </span>
-            <input value={description} onChange={handleDescription}/>
-            <span>Poster URL: </span>
-            <input value={posterURL} onChange={handlePosterURL}/>
-            <span>Rating: </span>
-            <input value={rating} onChange={handleRating}/>
-
-            <input type="submit" value="add movie"/>
-    </form>
-        */}
+            </Modal>
+        </>
     )
 }
 
